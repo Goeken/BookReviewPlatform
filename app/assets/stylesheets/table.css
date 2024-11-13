@@ -1,0 +1,4 @@
+.table-primary {
+    background-color: var(--primary-purple) !important;
+    color: #ffffff;
+}

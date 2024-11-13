@@ -1,0 +1,26 @@
+.navbar {
+    background-color: var(--primary-purple);
+}
+
+.custom-brand {
+    color: var(--complimentary-white);
+    font-weight: bold;
+    font-size: 2em;
+    text-decoration: none;
+}
+
+.nav-link.text-complementary {
+    color: var(--complimentary-white);
+    font-size: 1.2em;
+    transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.nav-link.text-complementary:hover {
+    opacity: 0.7;
+}
+
+.nav-link.active {
+    color: var(--complimentary-white);
+    font-weight: bold;
+    opacity: 1;
+}

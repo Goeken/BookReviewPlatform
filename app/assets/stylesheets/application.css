@@ -12,4 +12,14 @@
  *
  *= require_tree .
  *= require_self
+ *=require navbar 
+ *=require pagination 
+ *=require buttons 
+ *=require table
  */
+
+:root {
+    --primary-purple: #6f42c1;
+    --dark-purple: #4b2e83;
+    --complimentary-white: #f8f9fa;
+}
