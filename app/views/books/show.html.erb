@@ -1,0 +1,23 @@
+<h1><%= @book.title %></h1>
+<p>Author: <%= @book.author %></p>
+<p>Publication Year: <%= @book.publication_year %></p>
+<p>ISBN: <%= @book.isbn %></p>
+<p>Average Rating: <%= @book.average_rating || 'No ratings yet' %></p>
+
+<h2>Reviews</h2>
+<%= render @book.reviews %>
+
+<% if current_user %>
+  <h3>Add/Update Your Review</h3>
+  <%= form_with model: [@book, @review], local: true do |form| %>
+    <div>
+      <%= form.label :rating %>
+      <%= form.number_field :rating, in: 1..5, required: true %>
+    </div>
+    <div>
+      <%= form.label :content %>
+      <%= form.text_area :content, required: true %>
+    </div>
+    <%= form.submit 'Submit' %>
+  <% end %>
+<% end %>
