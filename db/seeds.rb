@@ -10,21 +10,20 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-
 3.times do
   user = User.find_or_create_by!(email: Faker::Internet.unique.email) do |u|
     u.password = 'password'
   end
 
   5.times do
-    book = Book.find_or_create_by!(title: Faker::Book.unique.title, user: user) do |b|
+    book = Book.find_or_create_by!(title: Faker::Book.unique.title, user:) do |b|
       b.author = Faker::Book.author
       b.publication_year = Faker::Number.between(from: 1900, to: 2023)
       b.isbn = Faker::Number.number(digits: 10)
     end
 
     3.times do
-      Review.find_or_create_by!(user: user, book: book) do |r|
+      Review.find_or_create_by!(user:, book:) do |r|
         r.rating = Faker::Number.between(from: 1, to: 5)
         r.content = Faker::Lorem.paragraph
       end

@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class BooksController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_book, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: %i[index show]
+  before_action :set_book, only: %i[show edit update destroy]
 
   def index
     @books = Book.where('title ILIKE ? OR author ILIKE ?', "%#{params[:search]}%", "%#{params[:search]}%")
@@ -24,8 +26,7 @@ class BooksController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @book.update(book_params)
