@@ -18,3 +18,16 @@
 .rounded-btn {
     border-radius: 20px;
 }
+
+.btn-primary {
+    color: #ffffff;
+    padding: 0.55em 1.3em;
+    background: linear-gradient(45deg, #17A2B8, #17A2B8);
+    border: none;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #17A2B8, #17A2B8);
+    transform: scale(1.05);
+}

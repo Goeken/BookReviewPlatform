@@ -9,14 +9,6 @@
         <li class="nav-item">
           <%= link_to 'All Books', root_path, class: 'nav-link text-complementary' %>
         </li>
-        <% if user_signed_in? %>
-          <li class="nav-item">
-            <%= link_to 'My Books', '#', class: 'nav-link text-complementary' %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'My Reviews', '#', class: 'nav-link text-complementary' %>
-          </li>
-        <% end %>
       </ul>
         <ul class="navbar-nav">
         <% if user_signed_in? %>

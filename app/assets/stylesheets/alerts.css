@@ -1,0 +1,27 @@
+.alerts-container {
+    position: fixed;
+    top: 5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1050;
+    /* Ensure it is above other elements */
+    width: 90%;
+    /* Adjust width for responsiveness */
+    max-width: 600px;
+    /* Limit max width for readability */
+}
+
+.alert {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Add a subtle shadow for elevation */
+    opacity: 0.95;
+    /* Slight transparency for better visual appeal */
+}
+
+.alert-dismissible .btn-close {
+    opacity: 0.8;
+}
+
+.alert-dismissible .btn-close:hover {
+    opacity: 1;
+}
