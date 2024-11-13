@@ -12,22 +12,10 @@ RSpec.describe Book, type: :model do
     it { should validate_presence_of(:author) }
     it { should validate_presence_of(:publication_year) }
     it { should validate_presence_of(:isbn) }
-
-    it {
-      should allow_value('1234567890').for(:isbn)
-    }
-
-    it {
-      should allow_value('1234567890123').for(:isbn)
-    }
-
-    it {
-      should_not allow_value('12345').for(:isbn)
-    }
-
-    it {
-      should_not allow_value('invalid_isbn').for(:isbn)
-    }
+    it { should allow_value('1234567890').for(:isbn) }
+    it { should allow_value('1234567890123').for(:isbn) }
+    it { should_not allow_value('12345').for(:isbn) }
+    it { should_not allow_value('invalid_isbn').for(:isbn) }
   end
 
   describe 'custom validations' do
