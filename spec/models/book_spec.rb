@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Book, type: :model do
@@ -32,7 +34,7 @@ RSpec.describe Book, type: :model do
     it 'raises an error if ISBN is invalid' do
       book = Book.new(title: 'Test Book', author: 'Author Name', publication_year: 2023, isbn: '12345', user: User.new)
       expect(book).not_to be_valid
-      expect(book.errors[:isbn]).to include("must be a valid ISBN")
+      expect(book.errors[:isbn]).to include('must be a valid ISBN')
     end
   end
 end
