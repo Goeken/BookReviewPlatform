@@ -2,6 +2,7 @@
 
 class ReviewsController < ApplicationController
   before_action :authenticate_user!
+  before_action :authorize_review!, only: %i[edit update destroy]
   before_action :set_book
   before_action :set_review, only: %i[edit update destroy]
 
@@ -44,5 +45,12 @@ class ReviewsController < ApplicationController
 
   def review_params
     params.require(:review).permit(:rating, :content)
+  end
+
+  def authorize_review!
+    @review = Review.find(params[:id])
+    return if @review.user == current_user
+
+    redirect_to book_path(@review.book), alert: 'You are not authorized to perform this action'
   end
 end

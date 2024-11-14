@@ -2,6 +2,7 @@
 
 class BooksController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
+  before_action :authorize_book!, only: %i[edit update destroy]
   before_action :set_book, only: %i[show edit update destroy]
 
     def index
@@ -67,5 +68,11 @@ class BooksController < ApplicationController
     else
       "#{sort_field} #{sort_direction}"
     end
+  end
+
+  def authorize_book!
+    return if @book.user == current_user
+
+      redirect_to books_path, alert: 'You are not authorized to perform this action'
   end
 end
