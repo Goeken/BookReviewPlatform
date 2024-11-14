@@ -2,8 +2,8 @@
 
 class BooksController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :authorize_book!, only: %i[edit update destroy]
   before_action :set_book, only: %i[show edit update destroy]
+  before_action :authorize_book!, only: %i[edit update destroy]
 
     def index
       valid_sort_fields = %w[id title author average_rating]
