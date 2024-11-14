@@ -13,6 +13,7 @@ The **Books Review Platform** is a web application for managing books and their 
 - Write, Edit, Delete Reviews
 - Search and Sort Books by Title, Author, and Average Rating
 - Responsive design with Bootstrap
+- Turbo/Hotwire for creating and deleting Reviews
 
 ---
 
