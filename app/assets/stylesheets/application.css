@@ -19,10 +19,22 @@
  *=require user
  *=require books
  *=require alerts
+ *=require footer
  */
 
 :root {
     --primary-purple: #6f42c1;
     --dark-purple: #4b2e83;
     --complimentary-white: #f8f9fa;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
 }
