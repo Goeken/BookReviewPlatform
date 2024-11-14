@@ -18,14 +18,14 @@ class ReviewsController < ApplicationController
 
   def edit; end
 
-  def update
-    if @review.update(review_params)
-      redirect_to book_path(@book), notice: 'Review successfully updated!'
-    else
-      flash.now[:alert] = 'Failed to update the review. Please fix the errors'
-      render :edit
+    def update
+      @review = current_user.reviews.find(params[:id])
+      if @review.update(review_params)
+        redirect_to book_path(@review.book), notice: 'Review updated successfully'
+      else
+        render :edit, status: :unprocessable_entity
+      end
     end
-  end
 
   def destroy
     @review.destroy

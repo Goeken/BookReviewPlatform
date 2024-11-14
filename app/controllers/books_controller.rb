@@ -35,7 +35,7 @@ class BooksController < ApplicationController
     if @book.update(book_params)
       redirect_to @book, notice: 'Book successfully updated'
     else
-      render :edit, alert: 'Failed to update the book. Please check the errors below.'
+      render :edit, status: :unprocessable_entity
     end
   end
 
