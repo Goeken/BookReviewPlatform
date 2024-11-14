@@ -80,19 +80,19 @@ Ensure you have the following installed:
 
 ### 1. Home Page with Book List
 
-![Home Page](screenshots/home-screen.png)
+![home-screen](https://github.com/user-attachments/assets/adcb1371-af44-4763-944c-d0dbd1872083)
 
 ### 2. Add Book Page
 
-![Add Book](screenshots/create-book.png)
+![create-book](https://github.com/user-attachments/assets/340eb9a0-c169-486b-bc79-b0237c102618)
 
 ### 3. Book Details with Reviews
 
-![Book Details](screenshots/book-show.png)
+![book-show](https://github.com/user-attachments/assets/141c6dc0-7ad0-47b3-b092-0925a508d062)
 
 ### 4. User Profile Page
 
-![User Profile](screenshots/profile.png)
+![profile](https://github.com/user-attachments/assets/68f1fae1-140a-4623-9657-6e101530af93)
 
 ---
 
