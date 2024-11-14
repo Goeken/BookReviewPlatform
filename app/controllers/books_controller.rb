@@ -5,19 +5,16 @@ class BooksController < ApplicationController
   before_action :set_book, only: %i[show edit update destroy]
 
   def index
-@books = Book.where('title ILIKE ? OR author ILIKE ?', "%#{params[:search]}%", "%#{params[:search]}%")
-             .order(id: :desc)
-             .page(params[:page]).per(10)
+    @books = Book.where('title ILIKE ? OR author ILIKE ?', "%#{params[:search]}%", "%#{params[:search]}%")
+                 .order(id: :desc)
+                 .page(params[:page]).per(10)
   end
 
-def show
-  @book = Book.find(params[:id])
-  @reviews = @book.reviews.includes(:user).where.not(user_id: nil)
-  @review_form = current_user && !@book.reviews.exists?(user: current_user) ? @book.reviews.new : nil
-end
-
-
-
+    def show
+      @book = Book.find(params[:id])
+      @reviews = @book.reviews.includes(:user).where.not(user_id: nil)
+      @review_form = current_user && !@book.reviews.exists?(user: current_user) ? @book.reviews.new : nil
+    end
 
   def new
     @book = current_user.books.new
