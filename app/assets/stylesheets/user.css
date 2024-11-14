@@ -1,0 +1,8 @@
+.book-title {
+    color: var(--primary-purple);
+    font-weight: bold;
+}
+
+.card-body .d-flex {
+    margin-top: 1rem;
+}

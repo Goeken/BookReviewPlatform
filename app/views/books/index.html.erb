@@ -1,5 +1,10 @@
 <div class="container">
     <h1 class="text-center mb-4">Books</h1>
+     <% if user_signed_in? %>
+    <div class="d-flex justify-content-end mb-4">
+      <%= link_to 'Add Book', new_book_path, class: 'btn btn-primary' %>
+    </div>
+  <% end %>
     <div class="row">
         <div class="col-md-6 offset-md-3">
         <%= form_with url: books_path, method: :get, local: true, class: 'd-flex mb-4' do |form| %>

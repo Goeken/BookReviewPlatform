@@ -1,23 +1,76 @@
-<h1><%= @book.title %></h1>
-<p>Author: <%= @book.author %></p>
-<p>Publication Year: <%= @book.publication_year %></p>
-<p>ISBN: <%= @book.isbn %></p>
-<p>Average Rating: <%= @book.average_rating || 'No ratings yet' %></p>
+<div class="container mt-4">
+  <!-- Banner -->
+  <div class="banner mb-4 d-flex align-items-center justify-content-center">
+    <h1 class="text-white fw-bold"><%= @book.title %></h1>
+  </div>
 
-<h2>Reviews</h2>
-<%= render @book.reviews %>
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <!-- Book Rating -->
+      <div class="mb-4">
+        <div class="d-flex align-items-center">
+          <% 1.upto(5) do |star| %>
+            <% if @book.average_rating && star <= @book.average_rating.round %>
+              <i class="bi bi-star-fill text-warning me-1" style="font-size: 1.5rem;"></i>
+            <% else %>
+              <i class="bi bi-star text-secondary me-1" style="font-size: 1.5rem;"></i>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
 
-<% if current_user %>
-  <h3>Add/Update Your Review</h3>
-  <%= form_with model: [@book, @review], local: true do |form| %>
-    <div>
-      <%= form.label :rating %>
-      <%= form.number_field :rating, in: 1..5, required: true %>
+      <!-- Book Information -->
+      <div class="mb-4">
+        <h3>Book Information</h3>
+        <p><strong>Author:</strong> <%= @book.author %></p>
+        <p><strong>Publication Year:</strong> <%= @book.publication_year %></p>
+        <p><strong>ISBN:</strong> <%= @book.isbn %></p>
+      </div>
+
+      <!-- Create Review Form -->
+      <% if user_signed_in? && !@book.reviews.exists?(user: current_user) %>
+        <div class="mb-4">
+          <h3>Write a Review</h3>
+          <%= form_with(model: [@book, @review_form], local: true) do |form| %>
+            <div class="mb-3">
+              <%= form.label :rating, "Rating (1-5)", class: 'form-label' %>
+              <%= form.number_field :rating, class: 'form-control', min: 1, max: 5, required: true %>
+            </div>
+            <div class="mb-3">
+              <%= form.label :content, "Review Content", class: 'form-label' %>
+              <%= form.text_area :content, class: 'form-control', rows: 4, required: true %>
+            </div>
+            <%= form.submit 'Submit Review', class: 'btn btn-primary' %>
+          <% end %>
+        </div>
+      <% end %>
+
+        <div class="mb-4">
+        <h3>Reviews</h3>
+        <% if @book.reviews.where.not(rating: nil).any? %>
+            <% @book.reviews.where.not(rating: nil).each do |review| %>
+            <div class="card mb-3">
+                <div class="card-body">
+                <h5 class="card-title">
+                    Review by: <%= review.user&.email || 'Deleted User' %>
+                </h5>
+                <p class="card-text">
+                    <strong>Rating:</strong> <%= review.rating %> / 5<br>
+                    <strong>Content:</strong> <%= review.content %>
+                </p>
+                <% if user_signed_in? && review.user == current_user %>
+                    <div class="d-flex mt-2">
+                    <%= link_to 'Edit', edit_book_review_path(@book, review), class: 'btn btn-outline-info me-2 rounded-btn' %>
+                    <%= link_to 'Delete', book_review_path(@book, review), data: { turbo_method: 'delete', confirm: 'Are you sure?' }, class: 'btn btn-outline-danger rounded-btn' %>
+                    </div>
+                <% end %>
+                </div>
+            </div>
+            <% end %>
+        <% else %>
+            <p>No reviews yet. Be the first to review this book!</p>
+        <% end %>
+        </div>
     </div>
-    <div>
-      <%= form.label :content %>
-      <%= form.text_area :content, required: true %>
-    </div>
-    <%= form.submit 'Submit' %>
-  <% end %>
-<% end %>
+  </div>
+</div>

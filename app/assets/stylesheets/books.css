@@ -1,0 +1,19 @@
+.banner {
+    background: linear-gradient(45deg, var(--primary-purple), var(--dark-purple));
+    padding: 2rem 0;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.bi-star-fill {
+    color: #ffc107;
+}
+
+.bi-star {
+    color: #dcdcdc;
+}
+
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+}

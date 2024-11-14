@@ -1,10 +1,12 @@
 <div class="container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h1 class="mb-0"><%= current_user.email %></h1>
+    <%= link_to 'Add Book', new_book_path, class: 'btn btn-primary' %>
     <%= link_to 'Logout', destroy_user_session_path, data: { turbo_method: 'delete' }, class: 'btn btn-danger' %>
-
   </div>
 
+  <hr />
+  <br />
   <div class="row">
     <!-- Books Section -->
     <div class="col-lg-8">
@@ -12,16 +14,16 @@
       <% @books.each do |book| %>
         <div class="card mb-3">
           <div class="card-body">
-            <h4 class="card-title mb-2"><%= book.title %></h4>
+            <h4 class="card-title book-title"><%= book.title %></h4>
             <p class="card-text mb-1">
               <strong>Author:</strong> <%= book.author %><br>
               <strong>Published:</strong> <%= book.publication_year %><br>
               <strong>Added On:</strong> <%= book.created_at.strftime('%B %d, %Y') %>
             </p>
-            <div class="d-flex">
+            <div class="d-flex mt-3">
               <%= link_to 'View', book_path(book), class: 'btn btn-outline-primary me-2 rounded-btn' %>
               <%= link_to 'Edit', edit_book_path(book), class: 'btn btn-outline-info me-2 rounded-btn' %>
-              <%= link_to 'Delete', book_path(book), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger rounded-btn' %>
+              <%= link_to 'Delete', book_path(book), data: { turbo_method: 'delete', confirm: 'Are you sure?' }, class: 'btn btn-outline-danger rounded-btn' %>
             </div>
           </div>
         </div>
@@ -34,15 +36,15 @@
       <% @reviews.each do |review| %>
         <div class="card mb-3">
           <div class="card-body">
-            <h4 class="card-title mb-2">Review for: <%= review.book.title %></h4>
+            <h4 class="card-title book-title">Review for: <%= review.book.title %></h4>
             <p class="card-text mb-1">
               <strong>Rating:</strong> <%= review.rating %> / 5<br>
               <strong>Content:</strong> <%= truncate(review.content, length: 100) %>
             </p>
-            <div class="d-flex">
+            <div class="d-flex mt-3">
               <%= link_to 'View', book_path(review.book), class: 'btn btn-outline-primary me-2 rounded-btn' %>
               <%= link_to 'Edit', edit_review_path(review), class: 'btn btn-outline-info me-2 rounded-btn' %>
-              <%= link_to 'Delete', review_path(review), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger rounded-btn' %>
+              <%= link_to 'Delete', review_path(review), data: { turbo_method: 'delete', confirm: 'Are you sure?' }, class: 'btn btn-outline-danger rounded-btn' %>
             </div>
           </div>
         </div>

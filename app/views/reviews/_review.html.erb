@@ -2,7 +2,5 @@
   <p><strong><%= review.user.email %>:</strong> <%= review.rating %> stars</p>
   <p><%= review.content %></p>
   <% if review.user == current_user %>
-    <%= link_to 'Edit', edit_book_review_path(review.book, review) %> |
-    <%= link_to 'Delete', book_review_path(review.book, review), method: :delete, data: { confirm: 'Are you sure?' } %>
   <% end %>
 </div>

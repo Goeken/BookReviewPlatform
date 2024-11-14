@@ -13,6 +13,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
 
   resources :books do
-    resources :reviews, only: %i[create update destroy]
+    resources :reviews, only: %i[create edit update destroy]
   end
 end

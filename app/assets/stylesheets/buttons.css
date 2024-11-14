@@ -31,3 +31,23 @@
     background: linear-gradient(45deg, #17A2B8, #17A2B8);
     transform: scale(1.05);
 }
+
+.btn-outline-info {
+    border-color: #17a2b8;
+    color: #17a2b8;
+}
+
+.btn-outline-info:hover {
+    background-color: #17a2b8;
+    color: #fff;
+}
+
+.btn-outline-danger {
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: #fff;
+}

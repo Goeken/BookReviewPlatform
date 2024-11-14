@@ -5,13 +5,19 @@ class BooksController < ApplicationController
   before_action :set_book, only: %i[show edit update destroy]
 
   def index
-    @books = Book.where('title ILIKE ? OR author ILIKE ?', "%#{params[:search]}%", "%#{params[:search]}%")
-                  .page(params[:page]).per(10)
+@books = Book.where('title ILIKE ? OR author ILIKE ?', "%#{params[:search]}%", "%#{params[:search]}%")
+             .order(id: :desc)
+             .page(params[:page]).per(10)
   end
 
-  def show
-    @review = current_user ? @book.reviews.find_or_initialize_by(user: current_user) : nil
-  end
+def show
+  @book = Book.find(params[:id])
+  @reviews = @book.reviews.includes(:user).where.not(user_id: nil)
+  @review_form = current_user && !@book.reviews.exists?(user: current_user) ? @book.reviews.new : nil
+end
+
+
+
 
   def new
     @book = current_user.books.new
@@ -32,13 +38,13 @@ class BooksController < ApplicationController
     if @book.update(book_params)
       redirect_to @book, notice: 'Book successfully updated'
     else
-      render :edit
+      render :edit, alert: 'Failed to update the book. Please check the errors below.'
     end
   end
 
   def destroy
     @book.destroy
-    redirect_to books_path, notice: 'Book successfully deleted'
+    redirect_to current_user, notice: 'Book successfully deleted'
   end
 
   private
