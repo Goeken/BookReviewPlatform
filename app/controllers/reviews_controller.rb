@@ -10,27 +10,37 @@ class ReviewsController < ApplicationController
     @review = @book.reviews.find_or_initialize_by(user: current_user)
 
     if @review.update(review_params)
-      redirect_to book_path(@book), notice: 'Review successfully created!'
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to book_path(@book), notice: 'Review successfully created!' }
+      end
     else
-      flash.now[:alert] = 'Failed to create the review. Please fix the errors'
-      render 'books/show'
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace('review_form', partial: 'reviews/review_form',
+                                                                   locals: { book: @book, review_form: @review })
+        end
+        format.html { render 'books/show', status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def destroy
+    @review.destroy
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to book_path(@book), notice: 'Review successfully deleted' }
     end
   end
 
   def edit; end
 
-    def update
-      @review = current_user.reviews.find(params[:id])
-      if @review.update(review_params)
-        redirect_to book_path(@review.book), notice: 'Review updated successfully'
-      else
-        render :edit, status: :unprocessable_entity
-      end
+  def update
+    if @review.update(review_params)
+      redirect_to book_path(@review.book), notice: 'Review updated successfully'
+    else
+      render :edit, status: :unprocessable_entity
     end
-
-  def destroy
-    @review.destroy
-    redirect_to book_path(@book), notice: 'Review successfully deleted'
   end
 
   private
@@ -48,7 +58,6 @@ class ReviewsController < ApplicationController
   end
 
   def authorize_review!
-    @review = Review.find(params[:id])
     return if @review.user == current_user
 
     redirect_to book_path(@review.book), alert: 'You are not authorized to perform this action'

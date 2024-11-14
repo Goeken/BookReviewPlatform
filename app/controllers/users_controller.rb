@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   private
 
   def authorize_user!
-    return if current_user.id.to_s == params[:id]
+    return if current_user.id == params[:id].to_i
 
       redirect_to root_path, alert: 'You are not authorized to view that page'
   end

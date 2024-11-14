@@ -1,0 +1,12 @@
+<%= turbo_stream.remove dom_id(@review) %>
+
+
+<%= turbo_stream.replace 'review_form' do %>
+    <%= turbo_frame_tag 'review_form' do %>
+    <%= render 'reviews/review_form', book: @book, review_form: @book.reviews.new %>
+    <% end %>
+<% end %>
+
+<%= turbo_stream.replace 'average_rating' do %>
+  <%= render 'books/average_rating', book: @book %>
+<% end %>

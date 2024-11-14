@@ -3,25 +3,18 @@
 
   <div class="row justify-content-center">
     <div class="col-lg-8">
-      <div class="mb-4">
-        <div class="d-flex align-items-center">
-          <% 1.upto(5) do |star| %>
-            <% if @book.average_rating && star <= @book.average_rating.round %>
-              <i class="bi bi-star-fill text-warning me-1" style="font-size: 1.5rem;"></i>
-            <% else %>
-              <i class="bi bi-star text-secondary me-1" style="font-size: 1.5rem;"></i>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
+      <%= render 'books/average_rating', book: @book %>
 
       <%= render 'book_info', book: @book %>
-
-      <% if user_signed_in? && !@book.reviews.exists?(user: current_user) %>
-        <%= render 'reviews/review_form', book: @book, review_form: @review_form %>
+      <%= turbo_frame_tag 'review_form' do %>
+        <% if user_signed_in? && !@book.reviews.exists?(user: current_user) %>
+          <%= render 'reviews/review_form', book: @book, review_form: @review_form %>
+        <% end %>
       <% end %>
 
-      <%= render 'reviews/reviews', book: @book %>
+      <%= turbo_frame_tag 'reviews' do %>
+        <%= render 'reviews/reviews', book: @book %>
+      <% end %>
     </div>
   </div>
 </div>

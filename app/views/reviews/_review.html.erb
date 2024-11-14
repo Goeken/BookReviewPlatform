@@ -1,6 +1,19 @@
-<div>
-  <p><strong><%= review.user.email %>:</strong> <%= review.rating %> stars</p>
-  <p><%= review.content %></p>
-  <% if review.user == current_user %>
-  <% end %>
-</div>
+<%= turbo_frame_tag dom_id(review) do %>
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title">
+        Review by: <%= review.user&.email || 'Deleted User' %>
+      </h5>
+      <p class="card-text">
+        <strong>Rating:</strong> <%= review.rating %> / 5<br>
+        <strong>Content:</strong> <%= review.content %>
+      </p>
+      <% if user_signed_in? && review.user == current_user %>
+        <div class="d-flex mt-2">
+          <%= link_to 'Edit', edit_book_review_path(book, review), data: { turbo_frame: dom_id(review) }, class: 'btn btn-outline-info me-2 rounded-btn' %>
+          <%= link_to 'Delete', book_review_path(book, review), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-outline-danger rounded-btn' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

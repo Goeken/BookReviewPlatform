@@ -1,0 +1,11 @@
+<div id="average_rating" class="mb-4">
+  <div class="d-flex align-items-center">
+    <% 1.upto(5) do |star| %>
+      <% if @book.average_rating && star <= @book.average_rating.round %>
+        <i class="bi bi-star-fill text-warning me-1" style="font-size: 1.5rem;"></i>
+      <% else %>
+        <i class="bi bi-star text-secondary me-1" style="font-size: 1.5rem;"></i>
+      <% end %>
+    <% end %>
+  </div>
+</div>

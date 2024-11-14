@@ -1,0 +1,13 @@
+<%= turbo_stream.prepend 'reviews' do %>
+  <%= render 'reviews/review', review: @review, book: @book %>
+<% end %>
+
+<%= turbo_stream.replace 'review_form' do %>
+      <%= turbo_frame_tag 'review_form' do %>
+        <p>You have submitted a review. Thank you!</p>
+      <% end %>
+<% end %>
+
+<%= turbo_stream.replace 'average_rating' do %>
+  <%= render 'books/average_rating', book: @book %>
+<% end %>
