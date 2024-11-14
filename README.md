@@ -33,7 +33,7 @@ Ensure you have the following installed:
 1. Clone the repository:
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Goeken/BookReviewPlatform.git
    cd books_review_platform
    ```
 
@@ -99,15 +99,12 @@ Ensure you have the following installed:
 
 ## How to Run Tests
 
-1. Run the RSpec test suite:
+Run the RSpec test suite:
 
    ```bash
    bundle exec rspec
    ```
 
-2. Ensure all tests pass before making changes or deploying.
-
----
 
 ## Future Improvements
 
