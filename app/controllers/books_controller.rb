@@ -4,19 +4,18 @@ class BooksController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_book, only: %i[show edit update destroy]
 
-def index
-  valid_sort_fields = %w[id title author average_rating]
-  sort_field = valid_sort_fields.include?(params[:sort]) ? params[:sort] : 'id'
-  sort_direction = %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
+    def index
+      valid_sort_fields = %w[id title author average_rating]
+      sort_field = valid_sort_fields.include?(params[:sort]) ? params[:sort] : 'id'
+      sort_direction = %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
 
-  @books = Book.left_joins(:reviews)
-               .select('books.*, COALESCE(AVG(reviews.rating), 0) AS average_rating')
-               .where('title ILIKE ? OR author ILIKE ?', "%#{params[:search]}%", "%#{params[:search]}%")
-               .group('books.id')
-               .order(safe_order_clause(sort_field, sort_direction))
-               .page(params[:page]).per(10)
-end
-
+      @books = Book.left_joins(:reviews)
+                   .select('books.*, COALESCE(AVG(reviews.rating), 0) AS average_rating')
+                   .where('title ILIKE ? OR author ILIKE ?', "%#{params[:search]}%", "%#{params[:search]}%")
+                   .group('books.id')
+                   .order(safe_order_clause(sort_field, sort_direction))
+                   .page(params[:page]).per(10)
+    end
 
     def show
       @book = Book.find(params[:id])
@@ -63,10 +62,10 @@ end
   end
 
   def safe_order_clause(sort_field, sort_direction)
-  if %w[title author].include?(sort_field)
-    "LOWER(#{sort_field}) #{sort_direction}"
-  else
-    "#{sort_field} #{sort_direction}"
+    if %w[title author].include?(sort_field)
+      "LOWER(#{sort_field}) #{sort_direction}"
+    else
+      "#{sort_field} #{sort_direction}"
+    end
   end
-end
 end
