@@ -5,24 +5,17 @@ class BooksController < ApplicationController
   before_action :set_book, only: %i[show edit update destroy]
   before_action :authorize_book!, only: %i[edit update destroy]
 
-    def index
-      valid_sort_fields = %w[id title author average_rating]
-      sort_field = valid_sort_fields.include?(params[:sort]) ? params[:sort] : 'id'
-      sort_direction = %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
+  def index
+    @books = Book.with_average_rating
+                  .search(params[:search])
+                  .sorted(params[:sort], params[:direction])
+                  .page(params[:page]).per(10)
+  end
 
-      @books = Book.left_joins(:reviews)
-                   .select('books.*, COALESCE(AVG(reviews.rating), 0) AS average_rating')
-                   .where('title ILIKE ? OR author ILIKE ?', "%#{params[:search]}%", "%#{params[:search]}%")
-                   .group('books.id')
-                   .order(safe_order_clause(sort_field, sort_direction))
-                   .page(params[:page]).per(10)
-    end
-
-    def show
-      @book = Book.find(params[:id])
-      @reviews = @book.reviews.includes(:user).where.not(user_id: nil)
-      @review_form = current_user && !@book.reviews.exists?(user: current_user) ? @book.reviews.new : nil
-    end
+  def show
+    @reviews = @book.reviews.includes(:user).where.not(user_id: nil)
+    @review_form = current_user && !@book.reviews.exists?(user: current_user) ? @book.reviews.new : nil
+  end
 
   def new
     @book = current_user.books.new
@@ -33,7 +26,7 @@ class BooksController < ApplicationController
     if @book.save
       redirect_to @book, notice: 'Book successfully created'
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -55,7 +48,10 @@ class BooksController < ApplicationController
   private
 
   def set_book
-    @book = Book.find(params[:id])
+    @book = Book.find_by(id: params[:id])
+    return if @book.present?
+
+    redirect_to books_path, alert: 'Book not found'
   end
 
   def book_params
