@@ -7,6 +7,6 @@ class Book < ApplicationRecord
   validates :isbn, format: { with: /\A\d{10}(\d{3})?\z/, message: 'must be a valid ISBN' }
 
   def average_rating
-    reviews.average(:rating).to_f
+    reviews.average(:rating).to_f || 0
   end
 end

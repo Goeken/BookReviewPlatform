@@ -1,22 +1,41 @@
-
 <div class="container">
-    <%= render 'shared/banner', title: 'Books' %>
+  <%= render 'shared/banner', title: 'Books' %>
 
-  <% if user_signed_in? %>
-    <div class="d-flex justify-content-end mb-4">
-      <%= link_to 'Add Book', new_book_path, class: 'btn btn-primary' %>
-    </div>
-  <% end %>
-
-  <div class="row">
-    <div class="col-md-6 offset-md-3">
-      <%= form_with url: books_path, method: :get, local: true, class: 'd-flex mb-4' do |form| %>
+  <!-- Search Bar -->
+  <div class="row mb-3">
+    <div class="col-md-8 offset-md-2">
+      <%= form_with url: books_path, method: :get, local: true, class: 'd-flex' do |form| %>
         <%= form.text_field :search, placeholder: "Search Books", class: 'form-control me-2' %>
         <%= form.submit 'Search', class: 'btn btn-primary' %>
       <% end %>
     </div>
   </div>
 
+  <!-- Sorting Options and Add Book -->
+  <div class="row mb-4">
+    <div class="col-md-6 d-flex align-items-center">
+      <%= form_with url: books_path, method: :get, local: true, class: 'd-flex align-items-center w-100' do |form| %>
+        <select name="sort" class="form-select me-2" onchange="this.form.submit()">
+          <option value="id" <%= 'selected' if params[:sort] == 'id' %>>Sort by: Default</option>
+          <option value="title" <%= 'selected' if params[:sort] == 'title' %>>Title</option>
+          <option value="author" <%= 'selected' if params[:sort] == 'author' %>>Author</option>
+          <option value="average_rating" <%= 'selected' if params[:sort] == 'average_rating' %>>Average Rating</option>
+        </select>
+        <select name="direction" class="form-select me-2" onchange="this.form.submit()">
+          <option value="asc" <%= 'selected' if params[:direction] == 'asc' %>>Ascending</option>
+          <option value="desc" <%= 'selected' if params[:direction] == 'desc' %>>Descending</option>
+        </select>
+        <%= hidden_field_tag :search, params[:search], id: nil %>
+      <% end %>
+    </div>
+    <% if user_signed_in? %>
+      <div class="col-md-6 d-flex justify-content-end">
+        <%= link_to 'Add Book +', new_book_path, class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Books Table -->
   <div class="table-responsive">
     <table class="table table-striped table-hover align-middle">
       <thead class="table-primary">
